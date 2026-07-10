@@ -1,0 +1,300 @@
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('fonts/SpaceGrotesk-Regular.ttf') format('truetype'),
+       url('fonts/Outfit-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('fonts/SpaceGrotesk-Medium.ttf') format('truetype'),
+       url('fonts/Outfit-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+#app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: transparent;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* ── Focus Timer Bar ── */
+#focus-bar {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 28px;
+  border-radius: 14px;
+  background: rgba(10, 12, 20, 0.45);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+  z-index: 20;
+  transition: opacity 0.4s ease, box-shadow 0.4s ease;
+}
+
+#focus-bar.focus-mode {
+  box-shadow:
+    0 0 12px rgba(99, 179, 237, 0.4),
+    0 0 24px rgba(99, 179, 237, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  animation: focusPulse 2s ease-in-out infinite;
+}
+
+#focus-bar.break-mode {
+  box-shadow:
+    0 0 12px rgba(104, 211, 145, 0.4),
+    0 0 24px rgba(104, 211, 145, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+#focus-bar-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  border-radius: 14px;
+  transition: width 0.3s linear;
+}
+
+#focus-bar.focus-mode #focus-bar-fill {
+  background: linear-gradient(90deg, rgba(56, 178, 172, 0.7), rgba(99, 179, 237, 0.85));
+  box-shadow: 0 0 8px rgba(99, 179, 237, 0.6);
+}
+
+#focus-bar.break-mode #focus-bar-fill {
+  background: linear-gradient(90deg, rgba(72, 187, 120, 0.7), rgba(104, 211, 145, 0.85));
+  box-shadow: 0 0 8px rgba(104, 211, 145, 0.6);
+}
+
+#focus-countdown {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+@keyframes focusPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 12px rgba(99, 179, 237, 0.4),
+      0 0 24px rgba(99, 179, 237, 0.15);
+  }
+  50% {
+    box-shadow:
+      0 0 18px rgba(99, 179, 237, 0.6),
+      0 0 36px rgba(99, 179, 237, 0.25);
+  }
+}
+
+/* ── Speech Bubble ── */
+#message-bubble {
+  position: absolute;
+  bottom: 170px;
+  z-index: 15;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: translateY(8px);
+}
+
+#message-bubble.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: none;
+  transform: translateY(0);
+}
+
+#message-bubble.hidden {
+  opacity: 0;
+}
+
+#bubble-shell {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+#message-text {
+  position: relative;
+  z-index: 1;
+  padding: 14px 18px 20px;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(240, 244, 255, 0.95);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  background: rgba(12, 16, 28, 0.35);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.2),
+    0 0 1px rgba(147, 197, 253, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* ── Pet Sprite ── */
+#pet-container {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  z-index: 10;
+  cursor: grab;
+  will-change: transform;
+  transition: filter 0.3s ease;
+}
+
+#pet-container:active {
+  cursor: grabbing;
+}
+
+#pet-sprite {
+  width: auto;
+  height: 150px;
+  image-rendering: pixelated;
+  -webkit-optimize-contrast: high;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+  transition: transform 0.2s ease;
+}
+
+#pet-sprite.focus-pose {
+  filter:
+    drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25))
+    drop-shadow(0 0 12px rgba(99, 179, 237, 0.3));
+}
+
+#pet-sprite.sleep-pose {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+#pet-sprite.drag-pose {
+  transform: rotate(-12deg) scale(1.05);
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+}
+
+#drag-paws {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 8px;
+  background: rgba(255, 200, 180, 0.6);
+  border-radius: 50%;
+  box-shadow:
+    -20px 0 0 rgba(255, 200, 180, 0.5),
+    20px 0 0 rgba(255, 200, 180, 0.5);
+  animation: pawWiggle 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes pawWiggle {
+  from { transform: translateX(-50%) rotate(-5deg); }
+  to { transform: translateX(-50%) rotate(5deg); }
+}
+
+/* ── Effects Layer ── */
+#effects-layer,
+#treat-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 12;
+}
+
+.zzz-icon {
+  position: absolute;
+  bottom: 160px;
+  width: 32px;
+  height: auto;
+  image-rendering: pixelated;
+  animation: zzzFloat 2s ease-in-out infinite;
+  opacity: 0.85;
+}
+
+@keyframes zzzFloat {
+  0% {
+    transform: translateY(0) translateX(0) scale(0.8);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-50px) translateX(12px) scale(1.1);
+    opacity: 0;
+  }
+}
+
+.floating-heart {
+  position: absolute;
+  font-size: 18px;
+  animation: heartFloat 1.8s ease-out forwards;
+  pointer-events: none;
+  text-shadow: 0 0 6px rgba(255, 100, 130, 0.6);
+}
+
+@keyframes heartFloat {
+  0% {
+    transform: translateY(0) scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-60px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+.treat-falling {
+  position: absolute;
+  width: 32px;
+  height: auto;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  z-index: 14;
+}

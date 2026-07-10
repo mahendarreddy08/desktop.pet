@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+  <title>Desktop Pet</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <div id="focus-bar" class="hidden">
+      <div id="focus-bar-fill"></div>
+      <span id="focus-countdown">25:00</span>
+    </div>
+
+    <div id="message-bubble" class="hidden">
+      <img id="bubble-shell" src="assets/message.png" alt="" draggable="false">
+      <p id="message-text"></p>
+    </div>
+
+    <div id="pet-container">
+      <img id="pet-sprite" src="assets/walk-1.png" alt="Desktop pet" draggable="false">
+      <div id="drag-paws" class="hidden"></div>
+    </div>
+
+    <div id="effects-layer"></div>
+    <div id="treat-layer"></div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

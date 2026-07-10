@@ -1,0 +1,51 @@
+{
+  "name": "desktop-pet",
+  "version": "1.0.0",
+  "description": "A floating desktop companion with Pomodoro timer, treats, and warm check-ins",
+  "main": "main.js",
+  "scripts": {
+    "generate-assets": "node scripts/generate-assets.js",
+    "download-font": "node scripts/download-font.js",
+    "postinstall": "npm run generate-assets && npm run download-font",
+    "start": "electron .",
+    "build:mac": "electron-builder --mac dmg",
+    "build:win": "electron-builder --win nsis",
+    "build": "electron-builder --mac dmg --win nsis"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8"
+  },
+  "dependencies": {
+    "pngjs": "^7.0.0"
+  },
+  "build": {
+    "appId": "com.desktoppet.app",
+    "productName": "Desktop Pet",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "renderer.js",
+      "styles.css",
+      "assets/**/*",
+      "fonts/**/*"
+    ],
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.productivity"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
